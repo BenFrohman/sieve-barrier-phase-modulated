@@ -1,0 +1,11 @@
+# LaTeX auxiliaries (never commit a CI rebuild over the official PDF)
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.toc
+ci-build/

@@ -1,0 +1,199 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\PP}{\mathcal{P}}
+\newcommand{\EE}{\mathcal{E}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\Lam}{\Lambda}
+
+\title{On the Local Commutation Limits of\\ Phase-Modulated Sieve Operators}
+\author{Benjamin Frohman}
+\date{13 September 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+A pointwise operator built from truncated factor counts \(\Omega_R\) at level \(R=N^\theta\), \(\theta<1/2\), cannot separate large twin primes from pairs whose prime factors all exceed \(R\). Embedding Selberg weights in a contour integral in an auxiliary variable \(z\) commutes: the integral factors as a function of \(n\bmod 42\) and leaves the quadratic weight unchanged. Under a strict branch-cut evaluation that function is \(r^{-\varepsilon}\mathrm{e}^{-\mathrm{i}\pi\varepsilon}\frac{\sin(\pi\varepsilon)}{\pi\varepsilon}\) on a circle of radius \(r\), hence a class constant, not a primality detector. The construction does not alter the Maynard--Polymath variational problem and does not improve the Bombieri--Vinogradov level of distribution. It does not yield \(H_1=2\). The established unconditional bound remains \(H_1\le 246\).
+\end{abstract}
+
+\noindent\textbf{MSC 2020:} 11N35, 11N05, 11A41.
+
+\section{Purpose and status}
+
+Write \(H_1=\liminf_{n\to\infty}(p_{n+1}-p_n)\). The twin-prime conjecture is \(H_1=2\). It is open. The established unconditional theorem is \(H_1\le 246\), obtained by Maynard weights on an admissible \(50\)-tuple of that diameter~\cite{Polymath8b}. A preprint of Stadlmann announces \(240\)~\cite{Stadlmann240}; that posting is cited only as a preprint. Under the Elliott--Halberstam conjecture one has \(H_1\le 12\); under a generalized form, \(H_1\le 6\). None of those statements is \(H_1=2\).
+
+This note records a negative result for one class of local operators that were examined as candidate bypasses of that last step: truncated factor counts, an auxiliary contour in \(z\), and a phase of \(n\bmod 42\). The integers \(42\) and \(208\) appearing below are parameters of \emph{this} operator, not of the Maynard integrals. The same obstruction holds for any function of \(n\bmod M\) with \(M\) fixed.
+
+\section{The local sieve barrier}
+
+\begin{lemma}[Local sieve barrier]
+\label{lem:local}
+Let \(N\) be large and let \(R=N^\theta\) with fixed \(\theta<1/2\). Define
+\[
+\Omega_R(n)=\sum_{\substack{p\mid n\\ p\le R}}1.
+\]
+Let \(\gamma\) be a simple closed contour about \(0\), and set
+\[
+f(z;n)=z^{\Omega_R(n)+\Omega_R(n+2)-2},\qquad
+t_R(n)=\frac{1}{2\pi\mathrm{i}}\oint_\gamma\frac{f(z;n)}{z^{1+\varepsilon(n)}}\,\mathrm{d}z,
+\]
+where \(\varepsilon(n)=(n\bmod 42)/208\). For non-integer \(\varepsilon\) the integrand has a branch point at \(0\); any value assigned to the integral depends on \(n\) only through \(\varepsilon(n)\). Then \(t_R\) cannot separate large twin primes from pairs whose prime factors all exceed \(R\).
+\end{lemma}
+
+\begin{proof}
+Let \(\PP\) be the class of \(n\sim N\) for which both \(n\) and \(n+2\) are prime. For \(\theta<1/2\) and \(n\) large one has \(n>R\), so \(\Omega_R(n)=\Omega_R(n+2)=0\).
+
+Let \(\EE\) be the class of \(n\sim N\) for which every prime factor of \(n\) and of \(n+2\) exceeds \(R\). This includes \(E_2\times E_2\) pairs and mixed pairs such as \((p,q^2)\) with \(p,q>R\). Then likewise \(\Omega_R(n)=\Omega_R(n+2)=0\).
+
+Hence \(f(z;n)=z^{-2}\) on both classes, and the integrand is \(z^{-3-\varepsilon(n)}\). The operator \(t_R(n)\) is a function of the class \(n\bmod 42\) only, and cannot separate \(\PP\) from \(\EE\) inside a fixed class.
+\end{proof}
+
+\begin{remark}
+At the genuine fixed level \(R=\lfloor 1000^{0.35}\rfloor=11\), both \((41,43)\in\PP\) and \((167,13^2)\) have \(\Omega_{11}=0,0\) and both have \(n\equiv 41\pmod{42}\). The same contour returns the same value.
+\end{remark}
+
+\begin{remark}
+If instead \(R=\sqrt{n}\), then \(\Omega_R(n)=0\) if and only if \(n\) is prime (every composite has a factor at most its square root). That choice is trial division, not a sieve of level \(N^\theta\).
+\end{remark}
+
+\section{Quadratic commutation}
+
+\begin{theorem}[Quadratic commutation barrier]
+\label{thm:comm}
+Let \(\Lam_2(n)=\bigl(\sum_{d\mid n(n+2)}\lambda_d\bigr)^2\) be a Selberg square weight with \(\lambda_d=0\) for \(d>R=N^\theta\). Embedding these weights in the same contour does not remove the barrier of Lemma~\ref{lem:local}:
+\[
+\cT(n)=\frac{1}{2\pi\mathrm{i}}\oint_\gamma\Lam_2(n)\,z^{-1-\varepsilon(n)}\,\mathrm{d}z
+=\Lam_2(n)\cdot e(n\bmod 42).
+\]
+The factor \(e(n\bmod 42)\) is constant on each residue class modulo \(42\). Since \(\Lam_2\ge 0\), the product cannot change sign inside a class to cancel \(E_2\) terms that share the class of a twin.
+\end{theorem}
+
+\begin{proof}
+The path \(\gamma\) does not depend on \(d\). The finite sum over divisors commutes with the integral, which is the displayed identity. The remaining integral depends on \(n\) only through \(\varepsilon(n)\), hence only through \(n\bmod 42\).
+\end{proof}
+
+\section{Branch-cut evaluation of \(e(n\bmod 42)\)}
+
+Write \(\varepsilon=(n\bmod 42)/208\in\{0,1/208,\ldots,41/208\}\) and \(\alpha=-1-\varepsilon\). The integrand \(z^\alpha\) is not single-valued on a punctured disk unless \(\varepsilon\in\mathbb{Z}\). Take the branch
+\[
+z^\alpha=\exp\bigl(\alpha(\log r+\mathrm{i}\theta)\bigr),\qquad z=r\mathrm{e}^{\mathrm{i}\theta},\quad \theta\in[0,2\pi),
+\]
+corresponding to a cut along the positive real axis (the starting ray of the parameterization). Then
+\[
+z^{-1-\varepsilon}\,\mathrm{d}z=\mathrm{i}\,r^{-\varepsilon}\mathrm{e}^{-\mathrm{i}\varepsilon\theta}\,\mathrm{d}\theta,
+\]
+and
+\begin{align*}
+\oint_{|z|=r}z^{-1-\varepsilon}\,\mathrm{d}z
+&=\mathrm{i}\,r^{-\varepsilon}\int_0^{2\pi}\mathrm{e}^{-\mathrm{i}\varepsilon\theta}\,\mathrm{d}\theta
+=\begin{cases}
+2\pi\mathrm{i}, & \varepsilon=0,\\[4pt]
+-\dfrac{r^{-\varepsilon}}{\varepsilon}\bigl(\mathrm{e}^{-2\pi\mathrm{i}\varepsilon}-1\bigr), & \varepsilon\neq 0.
+\end{cases}
+\end{align*}
+Dividing by \(2\pi\mathrm{i}\) and using \(\mathrm{e}^{-2\pi\mathrm{i}\varepsilon}-1=-2\mathrm{i}\,\mathrm{e}^{-\mathrm{i}\pi\varepsilon}\sin(\pi\varepsilon)\) gives
+\begin{equation}
+\label{eq:e}
+e(n\bmod 42)
+=
+r^{-\varepsilon}\,\mathrm{e}^{-\mathrm{i}\pi\varepsilon}\frac{\sin(\pi\varepsilon)}{\pi\varepsilon}
+\qquad(\varepsilon\neq 0),
+\end{equation}
+with the continuous limit \(e=1\) at \(\varepsilon=0\). In particular
+\[
+\bigl|e(n\bmod 42)\bigr|
+=r^{-\varepsilon}\left|\frac{\sin(\pi\varepsilon)}{\pi\varepsilon}\right|.
+\]
+This depends on the auxiliary radius \(r\) and on the class \(n\bmod 42\). It does not depend on \(\Omega(n)\) or \(\Lam(n)\Lam(n+2)\). Changing \(r\) or the placement of the cut changes the numerical value; it does not produce a function that is \(1\) on twins and \(0\) on \(E_2\) numbers in the same class.
+
+If the path is required to be a closed holomorphic contour in a single-valued branch (keyhole about the cut), the integral of \(z^{-1-\varepsilon}\) for \(\varepsilon\notin\mathbb{Z}\) is a jump across the cut, still a function of \(\varepsilon\) only.
+
+\section{Relation to Bombieri--Vinogradov}
+
+After Theorem~\ref{thm:comm}, any sum of \(\cT(n)\) over \(n\sim N\) splits as
+\[
+\sum_{n\sim N}\cT(n)
+=\sum_{a=0}^{41}e(a)\sum_{\substack{n\sim N\\ n\equiv a\pmod{42}}}\Lam_2(n).
+\]
+The inner sums are Selberg-weighted counts in a single arithmetic progression of modulus \(42\). The modulus is fixed. The Siegel--Walfisz theorem already gives primes in such progressions to an error smaller than any negative power of \(\log N\). Bombieri--Vinogradov is not the missing ingredient for modulus \(42\): it is the averaged statement that
+\[
+\sum_{q\le Q}\max_{(a,q)=1}\Bigl|\psi(x;q,a)-\frac{x}{\varphi(q)}\Bigr|
+\ll x(\log x)^{-A}
+\]
+holds for \(Q\le x^{1/2}(\log x)^{-B}\). That range of \(q\) is what permits Maynard weights supported up to \(R=N^\theta\) with \(\theta<1/2\) in the \emph{multidimensional} setting. It controls remainders after averaging over many moduli. It does not distinguish \(\Omega=1\) from \(\Omega=2\) inside one class modulo \(42\).
+
+Attaching the class-constant~\eqref{eq:e} therefore does not raise the level of distribution, does not enlarge the admissible support of \(\lambda_d\), and does not change the ratio \(2\sum_m J_m(F)/I(F)\) on the simplex
+\[
+\cR_k=\bigl\{(x_1,\ldots,x_k)\in\RR^k:x_i\ge 0,\ \textstyle\sum x_i\le 1\bigr\}.
+\]
+Those integrals are real. They contain no factor \(z^{-1-\varepsilon}\) and no period-\(42\) phase. The parity barrier at \(k=2\) is the size of that ratio under a level of distribution strictly less than \(1\), not an unevaluated branch cut.
+
+\section{Consequences}
+
+Lemma~\ref{lem:local} and Theorem~\ref{thm:comm} supply no additional information to the Maynard--Polymath variational problem. This construction does not deduce \(H_1=2\). The established unconditional theorem remains \(H_1\le 246\).
+
+\section{Direction of improvement in \(k\)}
+\label{sec:kdir}
+
+Under a stronger level of distribution the Maynard ratio \(\rho(F)>1\) becomes available at a \emph{smaller} ensemble size \(k\), hence at a smaller combinatorial diameter \(H(k)\). The direction of improvement is
+\[
+k\downarrow \quad\Longrightarrow\quad H(k)\downarrow,
+\]
+not \(k\uparrow\).
+
+\begin{itemize}
+\item Bombieri--Vinogradov (\(\theta<1/2\)): first crossing at \(k=50\), bound \(H_1\le H(50)=246\).
+\item Elliott--Halberstam: crossing at \(k=5\), bound \(H_1\le H(5)=12\).
+\item Generalized Elliott--Halberstam: crossing at \(k=3\), bound \(H_1\le H(3)=6\).
+\item Twin-prime conjecture: crossing at \(k=2\), bound \(H_1\le H(2)=2\). Open.
+\end{itemize}
+
+The GEH destination is \(k=3\), diameter \(6\). A bound of \(3\) is the twin-prime conjecture.
+
+In particular, inflating the tuple to \(k=196\) is the opposite of this direction. A \(196\)-tuple has
+\[
+H(196)\asymp 196\log 196+196\approx 10^3,
+\]
+which is a worse two-prime diameter if used at the same level of distribution. Generalized Elliott--Halberstam is used to drop from \(50\) toward \(3\), not to raise the support to \(196\). This note does not claim \(H_1\le 208\) at any \(k\).
+
+
+\paragraph{Not claimed.}
+\(H_1=2\); \(H_1\le 208\); a reduction of the ensemble size to \(k=42\); a factor \(\Phi(42/208)\) in \(J_m(F)\); that \(e(n\bmod 42)\) isolates twins.
+
+\begin{thebibliography}{9}
+\bibitem{Polymath8b}
+D.~H.~J.~Polymath,
+\emph{Variants of the Selberg sieve, and bounded intervals containing many primes},
+Res.\ Math.\ Sci.\ \textbf{1} (2014), Art.~12;
+arXiv:1407.4897.
+
+\bibitem{Stadlmann240}
+J.~Stadlmann,
+\emph{Bounded gaps between primes},
+arXiv:2608.31126v1, 2026.
+
+\bibitem{Maynard}
+J.~Maynard,
+\emph{Small gaps between primes},
+Ann.\ of Math.\ \textbf{181} (2015), 383--413.
+
+\bibitem{Bombieri}
+E.~Bombieri,
+\emph{On the large sieve},
+Mathematika \textbf{12} (1965), 201--225.
+\end{thebibliography}
+
+\end{document}
