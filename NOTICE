@@ -5,17 +5,19 @@ Author: Benjamin Stanley Frohman
 ORCID: https://orcid.org/0009-0006-7068-3718
 Affiliation: Independent Researcher, Texas, United States
 
-The materials in this repository (including the LaTeX sources, PDFs,
-supporting notes, and archival bundles under paper/) are licensed under
+The papers, notes, and PDFs in this repository are licensed under
 the Creative Commons Attribution 4.0 International License (CC BY 4.0);
 see LICENSE-paper.
+
+Repository code, including GitHub Actions workflows, is licensed under
+the Apache License, Version 2.0; see LICENSE.
 
 Any use, reproduction, or redistribution must credit Benjamin Stanley
 Frohman as the author, retain this NOTICE, and, if you use the work,
 please cite it using CITATION.cff or the DOI below.
 
 Canonical preprint: On the Local Commutation Limits of Phase-Modulated
-Sieve Operators (8 November 2026).
+Sieve Operators (23 November 2026 update of the 8 November 2026 text).
 Zenodo version DOI: https://doi.org/10.5281/zenodo.24064752
 Zenodo concept DOI: https://doi.org/10.5281/zenodo.24064751
 Repository: https://github.com/BenFrohman/sieve-barrier-phase-modulated

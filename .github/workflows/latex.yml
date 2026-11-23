@@ -12,8 +12,8 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-# This workflow compiles the preprint and checks committed file hashes.
-# It is not a Lean build and issues no mathematical certificate.
+# Compiles the preprint and checks committed archival hashes.
+# This is not a Lean build and issues no mathematical certificate.
 
 jobs:
   build:
@@ -30,8 +30,7 @@ jobs:
         run: |
           mkdir -p ci-build
           cp paper/Frohman_Sieve_Barrier_Preprint_2026.tex ci-build/
-          # Also compile the 13 September NoGo source.
-          cp paper/archive/2026-09-13/Frohman_Local_Sieve_NoGo_2026.tex ci-build/
+          cp Frohman_Local_Sieve_NoGo_2026.tex ci-build/
 
       - name: Compile canonical preprint
         uses: xu-cheng/latex-action@v3
@@ -45,26 +44,47 @@ jobs:
           root_file: Frohman_Local_Sieve_NoGo_2026.tex
           working_directory: ci-build
 
+      - name: Fail on undefined references or citations
+        run: |
+          set -euo pipefail
+          fail=0
+          for log in ci-build/*.log; do
+            echo "==== ${log} ===="
+            if grep -E 'Undefined (control sequence|reference|citation)|There were undefined references|Citation .* undefined' "$log"; then
+              fail=1
+            else
+              echo "No undefined references or citations reported."
+            fi
+          done
+          if command -v pdftotext >/dev/null 2>&1; then
+            for pdf in ci-build/*.pdf; do
+              txt="${pdf%.pdf}.txt"
+              pdftotext "$pdf" "$txt" || true
+              if grep -F '??' "$txt"; then
+                echo "Extracted text of ${pdf} still contains ??"
+                fail=1
+              fi
+            done
+          fi
+          exit "$fail"
+
       - name: Report overfull boxes
         run: |
           echo "Overfull/Underfull boxes (informational only; not a certificate):"
-          found=0
           for log in ci-build/*.log; do
             echo "==== ${log} ===="
             if grep -E 'Overfull \\hbox|Underfull \\hbox' "$log"; then
-              found=1
+              true
             else
               echo "None reported."
             fi
           done
-          # Do not fail the job on overfull boxes. A CI rebuild may also
-          # differ in page count from the official deposited PDF.
           exit 0
 
-      - name: Confirm official PDF was not overwritten
+      - name: Re-check archival hashes (committed PDF is not overwritten)
         run: sha256sum -c SHA256SUMS
 
-      - name: Upload CI rebuild PDFs (not the official deposited files)
+      - name: Upload CI rebuild PDFs
         uses: actions/upload-artifact@v4
         with:
           name: ci-rebuild-pdfs
