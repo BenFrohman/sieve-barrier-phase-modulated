@@ -1,0 +1,94 @@
+name: LaTeX
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# Checks archived files against committed SHA-256 hashes and compiles
+# the current source. This is not a Lean build and issues no
+# mathematical certificate.
+
+jobs:
+  build:
+    name: Compile preprint and verify hashes
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify archived and source hashes
+        run: sha256sum -c SHA256SUMS
+
+      - name: Stage a side copy of the current source
+        run: |
+          mkdir -p ci-build
+          cp paper/Frohman_Sieve_Barrier_Preprint_2026.tex ci-build/
+          cp Frohman_Local_Sieve_NoGo_2026.tex ci-build/
+
+      - name: Compile current preprint
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: Frohman_Sieve_Barrier_Preprint_2026.tex
+          working_directory: ci-build
+
+      - name: Compile 13 September Local Sieve NoGo source
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: Frohman_Local_Sieve_NoGo_2026.tex
+          working_directory: ci-build
+
+      - name: Fail on undefined references or citations
+        run: |
+          set -euo pipefail
+          fail=0
+          for log in ci-build/*.log; do
+            echo "==== ${log} ===="
+            if grep -E 'Undefined (control sequence|reference|citation)|There were undefined references|Citation .* undefined' "$log"; then
+              fail=1
+            else
+              echo "No undefined references or citations reported."
+            fi
+          done
+          if command -v pdftotext >/dev/null 2>&1; then
+            for pdf in ci-build/*.pdf; do
+              txt="${pdf%.pdf}.txt"
+              pdftotext "$pdf" "$txt" || true
+              if grep -F '??' "$txt"; then
+                echo "Extracted text of ${pdf} still contains ??"
+                fail=1
+              fi
+            done
+          fi
+          exit "$fail"
+
+      - name: Report overfull boxes
+        run: |
+          echo "Overfull/Underfull boxes (informational only; not a certificate):"
+          for log in ci-build/*.log; do
+            echo "==== ${log} ===="
+            if grep -E 'Overfull \\hbox|Underfull \\hbox' "$log"; then
+              true
+            else
+              echo "None reported."
+            fi
+          done
+          exit 0
+
+      - name: Re-check archival hashes (published 8 Nov files were not overwritten)
+        run: sha256sum -c SHA256SUMS
+
+      - name: Upload CI-built current PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-rebuild-pdfs
+          path: |
+            ci-build/Frohman_Sieve_Barrier_Preprint_2026.pdf
+            ci-build/Frohman_Local_Sieve_NoGo_2026.pdf

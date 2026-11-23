@@ -1,0 +1,12 @@
+# LaTeX auxiliaries. CI builds in ci-build/ and must not overwrite
+# the published 8 November files under paper/archive/2026-11-08/.
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.toc
+ci-build/

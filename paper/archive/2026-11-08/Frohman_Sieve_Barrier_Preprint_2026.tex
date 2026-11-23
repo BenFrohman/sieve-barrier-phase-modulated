@@ -1,0 +1,449 @@
+\documentclass[11pt,a4paper]{article}
+
+% ---------------------------------------------------------------------------
+% On the Local Commutation Limits of Phase-Modulated Sieve Operators
+% Benjamin Frohman  --  13 September 2026
+% Preprint for self-deposit.  Not a proof of the twin-prime conjecture.
+% ---------------------------------------------------------------------------
+
+\usepackage[margin=1in]{geometry}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xcolor}
+
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\theoremstyle{definition}
+\newtheorem{remark}{Remark}
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+\theoremstyle{plain}
+\newtheorem{conjecture}{Conjecture}
+
+\numberwithin{equation}{section}
+
+\title{On the Local Commutation Limits\\ of Phase-Modulated Sieve Operators}
+\author{Benjamin Frohman}
+\date{8 November 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Let \(R=N^{\theta}\) with \(\theta<1/2\). Any function of the prime factors of \(n\) that do not exceed \(R\) takes the same value on a large prime and on a product of two primes larger than \(R\). A contour integral whose integrand is built from those truncated counts, with a phase depending on \(n\) only through a fixed modulus, therefore cannot isolate twin primes. Embedding a Selberg square weight in the same contour commutes: the integral factors off as a function of the residue class and leaves the quadratic weight unchanged. Under a strict principal-branch evaluation the remaining factor is
+\[
+e_r(\varepsilon)=r^{-\varepsilon}\frac{\sin(\pi\varepsilon)}{\pi\varepsilon}
+\]
+(\(\varepsilon=0\) understood by continuity as \(1\)). It depends on \(n\) only through \(\varepsilon(n)=(n\bmod 42)/208\). Maynard's main terms are real integrals of a test function on a simplex; they do not evaluate this contour and are not modified by it. Bombieri--Vinogradov already controls primes in the finitely many progressions modulo \(42\); the obstruction is parity of \(\Omega\), not level of distribution for that modulus. The constructions studied here do not yield \(H_1=2\). The established unconditional bound remains \(H_1\le 246\).
+\end{abstract}
+
+\noindent
+MSC 2020: 11N35, 11N05, 11A41.\\
+Keywords: Selberg sieve, parity problem, Maynard--Tao weights, Bombieri--Vinogradov, twin primes.
+
+
+\begin{remark}[Deposition status]
+As of 8 November 2026 this preprint has been prepared for self-deposit but has not been uploaded to Zenodo or assigned a DOI. The local source and PDF are archived with this conversation. Upload remains the author's responsibility.
+\end{remark}
+
+\section{Purpose and status}
+
+Write \(H_1=\liminf_{n\to\infty}(p_{n+1}-p_n)\). The twin-prime conjecture is the assertion \(H_1=2\). It is open. Zhang~\cite{Zhang2013} proved \(H_1\) finite. Maynard~\cite{Maynard2015} and Polymath8b~\cite{Polymath8b} proved \(H_1\le 246\) by a multidimensional sieve on an admissible \(50\)-tuple of that diameter. Stadlmann~\cite{Stadlmann2026} announces \(240\); that note is cited here as a preprint, not as the established record. Under the Elliott--Halberstam conjecture one has \(H_1\le 12\); under a generalized form, \(H_1\le 6\)~\cite{Maynard2015,Polymath8b}. None of those statements is \(H_1=2\).
+
+The object of this note is a class of local operators that were examined as candidate bypasses of the parity barrier at \(k=2\). The conclusion is negative. The integers \(42\) and \(208\) that appear below are parameters of the specific phase that was tested. They are not constants of the Maynard variational problem. The barrier holds for any function of \(n\bmod M\), for any fixed modulus \(M\).
+
+\section{The local sieve barrier}
+
+\begin{definition}
+Let \(R=N^{\theta}\) with a fixed exponent \(\theta<1/2\). Define the truncated factor count
+\[
+\Omega_R(n)=\sum_{\substack{p\mid n\\ p\le R}}1.
+\]
+Let \(\gamma\) be a contour specified in Section~\ref{sec:branch}, and set
+\begin{equation}
+\label{eq:tR}
+f(z;n)=z^{\Omega_R(n)+\Omega_R(n+2)-2},\qquad
+t_R(n)=\frac{1}{2\pi i}\int_{\gamma}\frac{f(z;n)}{z^{1+\varepsilon(n)}}\,dz,
+\end{equation}
+where \(\varepsilon(n)=(n\bmod 42)/208\).
+\end{definition}
+
+\begin{lemma}[Local sieve barrier]
+\label{lem:local}
+The operator \(t_R\) cannot separate large twin primes from pairs whose prime factors all exceed \(R\).
+\end{lemma}
+
+\begin{proof}
+If \(n\) and \(n+2\) are both prime and larger than \(R\), then \(\Omega_R(n)=\Omega_R(n+2)=0\). If every prime factor of \(n\) and of \(n+2\) exceeds \(R\)---including \(E_2\times E_2\) pairs and mixed pairs such as \((p,q^2)\)---the same vanishing holds. Thus \(f(z;n)=z^{-2}\) on both classes, and the integrand of~\eqref{eq:tR} is \(z^{-3-\varepsilon(n)}\). By Proposition~\ref{prop:e} below, the value assigned to the integral (when defined) depends on \(n\) only through \(\varepsilon(n)\), hence only through \(n\bmod 42\). Inside a fixed class the two arithmetic types are indistinguishable.
+\end{proof}
+
+\begin{remark}[Numerical check]
+At \(R=\lfloor 1000^{0.35}\rfloor=11\), the twin pair \((41,43)\) and the mixed pair \((167,13^2)\) both satisfy \(\Omega_{11}=0,0\) and both satisfy \(n\equiv 41\pmod{42}\). The same contour returns the same value.
+\end{remark}
+
+\begin{remark}[The radius \(R=\sqrt{n}\)]
+If instead \(R=\sqrt{n}\), then \(\Omega_R(n)=0\) if and only if \(n\) is prime: every composite has a prime factor at most \(\sqrt{n}\). On the window \([100,1000]\) this holds in \(901\) of \(901\) cases. That choice is a primality test, not a sieve of level \(N^{\theta}\).
+\end{remark}
+
+\section{Quadratic commutation}
+\label{sec:commute}
+
+\begin{theorem}[Quadratic commutation]
+\label{thm:commute}
+Let \(\lambda_d=0\) for \(d>R\) and \(\Lambda_2(n)=\bigl(\sum_{d\mid n(n+2)}\lambda_d\bigr)^2\). Define
+\begin{equation}
+\label{eq:T}
+\mathcal{T}(n)=\frac{1}{2\pi i}\int_{\gamma}\Lambda_2(n)\,z^{-1-\varepsilon(n)}\,dz.
+\end{equation}
+Then
+\begin{equation}
+\label{eq:factor}
+\mathcal{T}(n)=e\bigl(n\bmod 42\bigr)\cdot\Lambda_2(n),
+\end{equation}
+where \(e\) is the class-constant factor of Proposition~\ref{prop:e}. Since \(\Lambda_2(n)\ge 0\), the product cannot change sign inside a class to cancel pairs whose factors all exceed \(R\). Embedding Selberg weights in the contour does not break Lemma~\ref{lem:local}.
+\end{theorem}
+
+\begin{proof}
+The path \(\gamma\) is independent of \(d\). The finite sum over divisors therefore factors out of the integral, leaving a class-constant multiplier times \(\Lambda_2(n)\). Summing over \(n\sim N\) scales each residue class and preserves the parity error.
+\end{proof}
+
+\section{Branch-cut evaluation of \(e(n\bmod 42)\)}
+\label{sec:branch}
+
+The integrand \(z^{-1-\varepsilon}\) with \(\varepsilon\in[0,41/208]\) is holomorphic on \(\mathbb{C}\setminus(-\infty,0]\) after a choice of logarithm. It does not have a simple pole at the origin unless \(\varepsilon=0\). A residue at \(z=0\) in the sense of Cauchy's theorem for meromorphic functions is therefore not defined for \(\varepsilon\neq 0\).
+
+Fix the principal branch \(\operatorname{Log} z=\log|z|+i\operatorname{Arg} z\) with \(\operatorname{Arg}\in(-\pi,\pi)\), and take \(\gamma_r\) to be the circular arc \(z=re^{i\theta}\), \(\theta\in(-\pi,\pi)\), traversed positively and stopping short of the cut \(\mathbb{R}_{\le 0}\).
+
+\begin{proposition}
+\label{prop:e}
+On \(\gamma_r\),
+\begin{equation}
+\label{eq:e}
+e_r(\varepsilon)\,:=\,\frac{1}{2\pi i}\int_{\gamma_r}z^{-1-\varepsilon}\,dz
+=r^{-\varepsilon}\frac{\sin(\pi\varepsilon)}{\pi\varepsilon},
+\end{equation}
+with the value \(1\) at \(\varepsilon=0\) understood by continuity. In particular \(e_r(\varepsilon)\) depends on \(n\) only through \(\varepsilon(n)=(n\bmod 42)/208\). It does not depend on \(\Omega(n)\) or \(\Omega(n+2)\).
+\end{proposition}
+
+\begin{proof}
+Parametrize \(z=re^{i\theta}\). Then
+\[
+z^{-1-\varepsilon}\,dz=i\,r^{-\varepsilon}\,e^{-i\varepsilon\theta}\,d\theta,
+\]
+and
+\[
+\frac{1}{2\pi i}\int_{-\pi}^{\pi}i\,r^{-\varepsilon}\,e^{-i\varepsilon\theta}\,d\theta
+=\frac{r^{-\varepsilon}}{2\pi}\int_{-\pi}^{\pi}e^{-i\varepsilon\theta}\,d\theta.
+\]
+The last integral is \(2\pi\) if \(\varepsilon=0\), and equals \(2\sin(\pi\varepsilon)/\varepsilon\) if \(\varepsilon\neq 0\). Division by \(2\pi\) yields~\eqref{eq:e}.
+\end{proof}
+
+\begin{remark}
+Closing the arc across the cut is not permitted: the principal branch jumps by \(2\pi i\varepsilon\) on \(\mathbb{R}_{<0}\). A keyhole contour around the cut produces a different integral, still a function of \(\varepsilon\) alone. No choice of path assigns the value \(1\) to twins and \(0\) to \(E_2\) numbers in the same residue class, because those two types never enter~\eqref{eq:e}.
+\end{remark}
+
+Thus \(e(n\bmod 42)\) is a bounded, explicit, class-constant multiplier. For the range of \(\varepsilon\) under study one has \(e_r(\varepsilon)\in\bigl(r^{-41/208}\operatorname{sinc}(41/208),\,1\bigr]\), hence \(e_r(\varepsilon)\asymp 1\) uniformly in the class. It is a rescaling, not a detector.
+
+\section{Commutation and Bombieri--Vinogradov}
+\label{sec:BV}
+
+Write \(\pi(x;q,a)\) for the number of primes \(\le x\) that are \(\equiv a\pmod{q}\). The Bombieri--Vinogradov theorem~\cite{Bombieri1965,Vinogradov1965} asserts that for every \(A>0\) there is \(B>A\) such that
+\begin{equation}
+\label{eq:BV}
+\sum_{q\le Q}\max_{(a,q)=1}\Bigl|\pi(x;q,a)-\frac{\operatorname{li}(x)}{\varphi(q)}\Bigr|
+\ll_A \frac{x}{(\log x)^A},
+\qquad Q=\frac{x^{1/2}}{(\log x)^B}.
+\end{equation}
+This is the source of the level of distribution \(\theta<1/2\) available to an unconditional multidimensional sieve: remainders attached to moduli \(q\le R\asymp N^{\theta}\) may be summed in \(q\) and remain smaller than the main terms, provided \(\theta<1/2\). Elliott--Halberstam is the hypothesis that the same estimate holds with \(Q=x^{1-\varepsilon}\). Generalized Elliott--Halberstam concerns products of several linear forms. Those hypotheses improve the admissible \(\theta\), and thereby the smallest \(k\) for which \(2\sum J_m(F)/I(F)\) clears the threshold. They do not identify primes inside a pair \(\{n,n+2\}\).
+
+Theorem~\ref{thm:commute} reduces a sum of the local operator to a finite linear combination of the original Selberg sums:
+\begin{equation}
+\label{eq:split}
+\sum_{n\sim N}\mathcal{T}(n)
+=\sum_{a=0}^{41}e_r\Bigl(\tfrac{a}{208}\Bigr)
+\sum_{\substack{n\sim N\\ n\equiv a\pmod{42}}}\Lambda_2(n).
+\end{equation}
+The outer sum has \(42\) terms. The inner sums are the usual quadratic sieve restricted to a single arithmetic progression of modulus \(42\).
+
+Two observations follow.
+
+\paragraph{The modulus is negligible.}
+The integer \(42=2\cdot 3\cdot 7\) is fixed. Primes in the coprime classes modulo \(42\) are already controlled by the Siegel--Walfisz theorem, and a fortiori by~\eqref{eq:BV} with \(Q\) far larger than \(42\). Inserting \(e_r(a/208)\) therefore does not create a new remainder that Bombieri--Vinogradov would have to absorb. It also does not create a new main term that Bombieri--Vinogradov does not already supply for \(\Lambda_2\) itself. The factor \(e_r\) is bounded and periodic; it can be absorbed into the finitely many congruence conditions that a sieve on \(\{n,n+2\}\) imposes from the start.
+
+\paragraph{The obstruction is not the level of distribution for modulus \(42\).}
+The reason a sieve of level \(R=N^{\theta}\) fails to force two primes in \(\{n,n+2\}\) is that \(\Lambda_2(n)\), and every function of divisors \(d\le R\), takes comparable values on a prime and on a product of two primes larger than \(R\). That is Selberg's parity problem~\cite{Selberg1991,Greaves2001}. Equation~\eqref{eq:split} multiplies each class by a constant. It does not change the relative weight of primes and \(E_2\) numbers inside the class. Raising the Bombieri--Vinogradov range from \(N^{1/2}\) toward \(N^{1-\varepsilon}\) (Elliott--Halberstam) enlarges the admissible \(\theta\) and lowers the \(k\) needed for a multidimensional tuple; it still leaves the two slots of \(\{0,2\}\) entangled by parity. That is why the conditional theorems stop at \(H_1\le 12\) or \(H_1\le 6\) rather than at \(H_1=2\).
+
+\section{Relation to the multidimensional sieve}
+
+After unfolding, the Maynard--Polymath main terms are ratios of real integrals of a test function \(F\) on the simplex
+\[
+\mathcal{R}_k=\bigl\{(x_1,\ldots,x_k):x_i\ge 0,\ \textstyle\sum x_i\le 1\bigr\}:
+\]
+a squared \(L^2\) term \(I(F)\) and terms \(J_m(F)\) built from a derivative in the \(m\)-th coordinate~\cite{Maynard2015,Polymath8b}. Those integrals contain no factor \(z^{-1-\varepsilon}\) and no period-\(42\) phase. There is no branch cut to deform. The parity limitation there is the size of \(2\sum_m J_m(F)/I(F)\) at small \(k\), given a limited level of distribution. The operator \(t_R\) does not appear in that ratio and does not change it. In particular there is no identity of the form
+\[
+J_m(F_{\mathrm{mod}})=\bigl(1+\Phi(42/208)\bigr)J_m(F)
+\]
+and no reduction of the ensemble size from \(50\) to \(42\).
+
+\begin{remark}[Direction of improvement]
+\label{rem:kdown}
+Under a stronger level of distribution the Maynard ratio \(\rho(F)>1\) becomes available at a \emph{smaller} ensemble size \(k\), hence at a \emph{smaller} combinatorial diameter \(H(k)\). The direction of improvement is
+\[
+k\downarrow \quad\Longrightarrow\quad H(k)\downarrow,
+\]
+not \(k\uparrow\). Explicitly:
+\begin{itemize}
+\item Bombieri--Vinogradov (\(\theta<1/2\)): first crossing at \(k=50\), bound \(H_1\le H(50)=246\).
+\item Elliott--Halberstam: crossing at \(k=5\), bound \(H_1\le H(5)=12\).
+\item Generalized Elliott--Halberstam: crossing at \(k=3\), bound \(H_1\le H(3)=6\).
+\item Twin-prime conjecture: crossing at \(k=2\), bound \(H_1\le H(2)=2\). Open.
+\end{itemize}
+Inflating the tuple to \(k=196\) moves the opposite way: \(H(196)\asymp 196\log 196+196\approx 10^{3}\), a worse two-prime diameter at the same level of distribution. Generalized Elliott--Halberstam is used to drop from \(50\) toward \(3\), not to raise the support to \(196\). The GEH destination is \(k=3\), diameter \(6\). A bound of \(3\) is the twin-prime conjecture.
+\end{remark}
+
+\section{Claimed and not claimed}
+
+\paragraph{Claimed.}
+Lemma~\ref{lem:local}: \(t_R\) cannot isolate twins at level \(R=N^{\theta}\), \(\theta<1/2\).
+Theorem~\ref{thm:commute}: \(\mathcal{T}(n)=e(n\bmod 42)\cdot\Lambda_2(n)\).
+Proposition~\ref{prop:e}: the explicit principal-arc evaluation of \(e_r(\varepsilon)\).
+The identification of \(R=\sqrt{n}\) as trial division.
+The observation that Maynard's integrals are real and do not evaluate this contour.
+The relation~\eqref{eq:split} to a finite set of progressions already within the range of Bombieri--Vinogradov.
+The established bound \(H_1\le 246\).
+Theorem~\ref{thm:kill}: the written contour and penalty families do not raise Maynard's \(\rho\); the six-page values \(0.0211\), \(1.0422\), \(k=196\), and \(H_1\le 208\) are not theorems of those weights.
+
+\paragraph{Not claimed.}
+\(H_1=2\).
+\(H_1\le 208\), \(k=196\), and \(\rho=1.0422\).
+The assertion that the constructions of this note ``break the parity barrier.''
+A reduction of \(k\) from \(50\) to \(42\), or any modification of \(I(F)\) or \(J_m(F)\) by a factor \(1+\Phi(42/208)\).
+An improvement of Polymath8b by the constructions of Sections~\ref{sec:commute}--\ref{sec:branch}.
+Promotion of~\cite{Stadlmann2026} from preprint to theorem.
+Promotion of Conjecture~\ref{conj:weight} to a theorem.
+
+
+\section{The extracted weight family}
+\label{sec:extracted}
+
+The only explicit family of weights appearing in the six-page construction is the following.
+
+\begin{definition}[Extracted family]
+\label{def:lambda}
+\[
+\lambda_d=\mu(d)\,g(d)\prod_{i=1}^{k}P_i\Bigl(\frac{\ln p}{\ln R}\Bigr)
+\exp\bigl(2\pi i\langle\mathbf{v},\boldsymbol{\omega}_R(d)\rangle\bigr)
+\]
+where
+\[
+g(d)=\prod_{p\mid d}\gamma(p),\qquad
+\gamma(p)=\begin{cases}
+1 & \text{if }p\le 7,\\
+\frac1p\Bigl(1+\frac{k-\omega_{\mathcal{H}}(p)}{p}\Bigr)^{-1} & \text{if }p>7,
+\end{cases}
+\]
+\[
+v_j=\exp\bigl(i\,\theta(h_j\bmod 42)\bigr),\qquad
+\theta(a)=\pi u_a+\frac\pi3 w_a,
+\]
+and
+\[
+\omega_j(d)=\#\{p\mid d:p\equiv h_j\pmod{42}\}.
+\]
+The associated simplex penalty is \(W_{\mathbf{v},m}(\mathbf{x})=1-\lvert\sum_{j\neq m}v_j x_j\rvert^2\).
+\end{definition}
+
+Every factor in \(\lambda_d\) is a function of the prime factors of the sifting divisor \(d\). In the sieve one has \(d\le R\). Consequently this family does not depend on the unsieved kernel of \(n\). It is the object of Theorem~\ref{thm:kill}, not of Conjecture~\ref{conj:weight}.
+
+\section{An open weight problem}
+\label{sec:conj}
+
+The six-page construction with a directional vector \(\mathbf{v}\) and a tracking map \(\boldsymbol{\omega}_R(d)\) is not a theorem of this note. After the deletions listed above it remains the following open problem.
+
+
+\subsection{The extracted weight family}
+The only explicit non-symmetric family that appears in the six-page construction is
+\begin{equation}
+\label{eq:lambda}
+\lambda_d=\mu(d)\,g(d)\prod_{i=1}^{k}P_i\Bigl(\frac{\ln p}{\ln R}\Bigr)
+\exp\bigl(2\pi i\langle\mathbf{v},\boldsymbol{\omega}_R(d)\rangle\bigr),
+\end{equation}
+where
+\[
+g(d)=\prod_{p\mid d}\gamma(p),\qquad
+\gamma(p)=\begin{cases}
+1 & p\le 7,\\
+\frac1p\Bigl(1+\frac{k-\omega_{\mathcal{H}}(p)}{p}\Bigr)^{-1} & p>7,
+\end{cases}
+\]
+\[
+v_j=\exp\bigl(i\,\theta(h_j\bmod 42)\bigr),\qquad
+\theta(a)=\pi u_a+\frac\pi3 w_a
+\]
+for the isomorphism \((\mathbb{Z}/42\mathbb{Z})^\times\cong C_2\times C_6\), and
+\[
+\omega_j(d)=\#\{p\mid d:p\equiv h_j\pmod{42}\}.
+\]
+Every factor depends only on the prime factors of the sifting divisor \(d\). In the sieve \(d\le R\). This family is therefore subject to Lemma~\ref{lem:local} and Theorem~\ref{thm:kill}. It is not the weight asked for by Conjecture~\ref{conj:weight}.
+
+\begin{conjecture}[A weight that sees the large kernel]
+\label{conj:weight}
+There exist sieve weights \(\lambda_d\), not a function of \(\{p\mid d:p\le R\}\) alone and not a function of \(n\bmod M\) alone for any fixed \(M\), together with a test function \(F\) on \(\mathcal{R}_k\), such that
+\[
+\rho(F)=\frac{2\sum_{m=1}^{k}J_m(F)}{I(F)}>1
+\]
+at a stated ensemble size \(k\) and a stated level of distribution.
+\end{conjecture}
+
+Three items are required before this can be promoted from conjecture to theorem:
+\begin{enumerate}
+\item the weights written so a referee can see how they depend on the unsieved kernel of \(n\) (or on some other invariant that is not \(\Omega_R\) and not \(n\bmod M\));
+\item the integrals \(I(F)\) and \(J_m(F)\) computed, not assigned;
+\item \(\rho(F)>1\) proved at that \(k\) and that level.
+\end{enumerate}
+If those three hold at \(k=3\) with Bombieri--Vinogradov level, one obtains unconditional DHL\([3,2]\) and \(H_1\le 6\). If they hold at \(k=2\) for \(\{0,2\}\), one obtains DHL\([2,2]\) and \(H_1=2\). Section~\ref{sec:integrals} finishes the integrals that belong to the weights actually written in this note. Those integrals do not clear \(\rho>1\) at \(k=2\). The integrals of Conjecture~\ref{conj:weight} remain open. Under GEH, DHL\([3,2]\) and \(H_1\le 6\) are already known~\cite{Maynard2015,Polymath8b}.
+
+\section{The integrals that can be finished}
+\label{sec:integrals}
+
+Two families appear in the constructions of this thread. For each, the Maynard integrals can be reduced without assigning a value of \(\rho\).
+
+\subsection{The commuting family}
+By Theorem~\ref{thm:commute},
+\[
+\sum_{n\sim N}\mathcal{T}(n)
+=\sum_{a=0}^{41}e_r\Bigl(\tfrac{a}{208}\Bigr)
+\sum_{\substack{n\sim N\\ n\equiv a\pmod{42}}}\Lambda_2(n).
+\]
+The inner sums are the usual Selberg--Maynard sums on a progression of fixed modulus \(42\). After unfolding, their main terms are the standard pair
+\[
+I(F)=\int_{\mathcal{R}_k}F^2,\qquad
+J_m(F)=\int_{\mathcal{R}_k}\Bigl(\int_0^{1-\sum_{i\neq m}x_i}\partial_{x_m}F\,dx_m\Bigr)^2,
+\]
+multiplied by the singular series of the tuple restricted to that class. The factor \(e_r(a/208)\) is bounded and periodic; it is absorbed into those finitely many classes. Therefore
+\[
+\rho_{\mathcal{T}}(F)=\rho_{\mathrm{Maynard}}(F).
+\]
+This finishes the integral for \(\mathcal{T}\). It does not raise \(\rho\) at any \(k\). In particular it does not produce \(\rho>1\) at \(k=2\).
+
+\subsection{The penalty \(W_{\mathbf{v},m}\) on the simplex}
+The modified drift proposed in the six-page note is the geometric integral
+\begin{equation}
+\label{eq:Jv}
+J_m^{(\mathbf{v})}(F)
+=\int_{\mathcal{R}_k}\lvert\partial_{x_m}F\rvert^2
+\Bigl(1-\Bigl\lvert\sum_{j\neq m}v_j x_j\Bigr\rvert^2\Bigr)\,dx.
+\end{equation}
+If \(\lvert v_j\rvert=1\) and \(x\in\mathcal{R}_k\), the term in parentheses is at most \(1\). Hence
+\[
+0\le J_m^{(\mathbf{v})}(F)\le J_m(F)
+\]
+for every \(F\), whenever the parenthesis is nonnegative. Replacing \(J_m\) by \(J_m^{(\mathbf{v})}\) cannot increase \(\rho\) unless \(I(F)\) is reduced by a larger factor.
+
+\begin{lemma}[Simplex moment]
+\label{lem:simplex}
+On \(\mathcal{R}_k=\{x_i\ge 0,\ \sum x_i\le 1\}\),
+\[
+\int_{\mathcal{R}_k}x_i^2\,dx=\frac{2}{(k+2)!},\qquad
+\int_{\mathcal{R}_k}x_i x_j\,dx=\frac{1}{(k+2)!}\quad(i\neq j).
+\]
+If \(|v_j|=1\) and off-diagonal contributions average to zero, the normalized moment is
+\[
+\frac{1}{\mathrm{vol}(\mathcal{R}_k)}\int_{\mathcal{R}_k}\Bigl|\sum_{j\neq m}v_j x_j\Bigr|^2\,dx
+=\frac{2(k-1)}{(k+1)(k+2)}.
+\]
+At \(k=3\) this equals \(1/5=0.2\). At \(k=196\) this equals \(65/6501\approx 0.0100\), not \(0.0211\).
+\end{lemma}
+
+\begin{proof}
+\(\mathrm{vol}(\mathcal{R}_k)=1/k!\). The monomial integrals are the Dirichlet moments on that simplex. The displayed ratio is \((k-1)\cdot 2/(k+2)!\) divided by \(1/k!\).
+\end{proof}
+
+\begin{theorem}[The written family does not raise \(\rho\)]
+\label{thm:kill}
+Assume \(I(F)\) is the unweighted \(L^2\) norm on \(\mathcal{R}_k\) and \(J_m^{(\mathbf{v})}\) is~\eqref{eq:Jv} with the parenthesis nonnegative. Then
+\[
+\rho^{(\mathbf{v})}(F)\,:=\,\frac{2\sum_{m=1}^{k}J_m^{(\mathbf{v})}(F)}{I(F)}
+\le
+\rho_{\mathrm{Maynard}}(F).
+\]
+In particular this family cannot produce a crossing that Maynard's weights do not already produce. Combined with Theorem~\ref{thm:commute} and Lemma~\ref{lem:local}:
+\begin{enumerate}
+\item \(\rho_{\mathcal{T}}=\rho_{\mathrm{Maynard}}\), so the contour factor does not raise \(\rho\);
+\item \(\rho^{(\mathbf{v})}\le\rho_{\mathrm{Maynard}}\), so the penalty does not raise \(\rho\);
+\item both constructions remain functions of \(d\le R\) or of \(n\bmod M\), so they do not separate large twins from large \(E_2\);
+\item the six-page values \(\delta\lambda=0.0211\), \(\rho=1.0422\), \(k=196\), and \(H_1\le 208\) are therefore false as theorems of these weights.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The inequality \(J_m^{(\mathbf{v})}(F)\le J_m(F)\) was recorded above. Summing on \(m\) and dividing by the same \(I(F)\) yields \(\rho^{(\mathbf{v})}\le\rho_{\mathrm{Maynard}}\). The contour case is the identity \(\rho_{\mathcal{T}}=\rho_{\mathrm{Maynard}}\) already proved. Lemma~\ref{lem:local} and Theorem~\ref{thm:commute} give (iii). Lemma~\ref{lem:simplex} replaces \(0.0211\) by \(65/6501\) at \(k=196\); even the larger number sat inside a term that subtracts from \(J\). The bound \(H_1\le 208\) at \(k=196\) is not \(H(196)\) and is not a consequence of \(\rho^{(\mathbf{v})}\le\rho_{\mathrm{Maynard}}\).
+\end{proof}
+
+This kills the six-page claim. It does not kill the twin-prime conjecture. Conjecture~\ref{conj:weight} remains the open weight problem.
+
+
+\subsection{The obstruction for Conjecture~\ref{conj:weight}}
+\label{sec:obstruction}
+
+Conjecture~\ref{conj:weight} asks for weights \(\lambda_d\) that are not a function of the set of prime factors of \(d\) that are \(\le R\), and not a function of \(n\bmod M\) for any fixed \(M\). Any such weight must therefore depend on the distribution of the large prime factors of \(n\) (the unsieved kernel).
+
+Standard sieve theory supplies only linear (Type I) information on this kernel. Selberg's parity barrier~\cite{Selberg1991} states that if a sequence is equidistributed in the Liouville function \(\lambda(n)\), then no combination of linear sums can distinguish numbers with an even number of prime factors from numbers with an odd number of prime factors. In the twin-prime setting this means that a weight depending only on factors \(\le R\) (or on a fixed modulus) cannot separate the twin-prime indicator from the indicator of products of two large primes. The same obstruction applies to any admissible 3-tuple under Bombieri--Vinogradov: the pure-sieve limit is \(H_1\le 6\), and even that requires the generalized Elliott--Halberstam conjecture~\cite{Polymath8b}.
+
+Consequently the three items listed after Conjecture~\ref{conj:weight} cannot be supplied by the methods of Sections~\ref{sec:commute}--\ref{sec:integrals}. A proof of the conjecture at \(k=2\) or \(k=3\) under Bombieri--Vinogradov would constitute a resolution of the twin-prime problem or of DHL\([3,2]\) by non-sieve means, and is not known.
+
+\subsection{What remains unfinished}
+A weight that depends on the unsieved kernel, the associated \(I(F)\) and \(J_m(F)\), and a proof that their ratio exceeds \(1\) at a stated \(k\) and a stated level. That is Conjecture~\ref{conj:weight}. Finishing~\eqref{eq:Jv} as geometry does not finish that conjecture.
+
+\section*{Acknowledgements}
+
+Credit for \(H_1\le 246\) remains with Zhang, Maynard, Tao, and Polymath8b. The author takes responsibility for Lemma~\ref{lem:local}, Theorem~\ref{thm:commute}, and Proposition~\ref{prop:e}.
+
+\begin{thebibliography}{99}
+
+\bibitem{Bombieri1965}
+E.~Bombieri,
+\textit{On the large sieve},
+Mathematika \textbf{12} (1965), 201--225.
+
+\bibitem{Greaves2001}
+G.~Greaves,
+\textit{Sieves in Number Theory},
+Springer, 2001.
+
+\bibitem{Maynard2015}
+J.~Maynard,
+\textit{Small gaps between primes},
+Ann.\ of Math.\ \textbf{181} (2015), 383--413.
+
+\bibitem{Polymath8b}
+D.H.J.~Polymath,
+\textit{Variants of the Selberg sieve, and bounded intervals containing many primes},
+Res.\ Math.\ Sci.\ \textbf{1} (2014), Art.~12.
+
+\bibitem{Selberg1991}
+A.~Selberg,
+\textit{Collected Papers}, Vol.~II,
+Springer, 1991.
+
+\bibitem{Stadlmann2026}
+J.~Stadlmann,
+\textit{Bounded gaps between primes in subsets},
+preprint, arXiv:2608.31126v1, 31 August 2026.
+
+\bibitem{Vinogradov1965}
+A.I.~Vinogradov,
+\textit{The density hypothesis for Dirichlet \(L\)-functions},
+Izv.\ Akad.\ Nauk SSSR Ser.\ Mat.\ \textbf{29} (1965), 903--934.
+
+\bibitem{Zhang2013}
+Y.~Zhang,
+\textit{Bounded gaps between primes},
+Ann.\ of Math.\ \textbf{179} (2014), 1121--1174.
+
+\end{thebibliography}
+
+\end{document}

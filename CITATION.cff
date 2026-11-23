@@ -1,0 +1,33 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it using the metadata below."
+title: "On the Local Commutation Limits of Phase-Modulated Sieve Operators"
+authors:
+  - family-names: "Frohman"
+    given-names: "Benjamin Stanley"
+    orcid: "https://orcid.org/0009-0006-7068-3718"
+    email: "frohmanbenjamin@gmail.com"
+    affiliation: "Independent Researcher, Texas, United States"
+type: article
+abstract: >-
+  A no-go result: phase-modulated contour operators built from truncated
+  prime-factor counts, with a phase depending only on a fixed modulus
+  (42/208), cannot isolate twin primes. Embedding Selberg weights commutes
+  and does not raise Maynard's ρ. The established unconditional bound
+  remains H₁ ≤ 246. This work does not claim an improvement on that bound.
+keywords:
+  - "sieve theory"
+  - "parity problem"
+  - "Maynard-Tao weights"
+  - "twin primes"
+  - "no-go"
+license: CC-BY-4.0
+date-released: "2026-11-23"
+repository-code: "https://github.com/BenFrohman/sieve-barrier-phase-modulated"
+url: "https://doi.org/10.5281/zenodo.24064752"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.24064752"
+    description: "Version DOI of the 8 November 2026 deposit (concept 24064751); this repository holds the 23 November 2026 metadata update of that text."
+  - type: doi
+    value: "10.5281/zenodo.24064751"
+    description: "Concept DOI (all versions)."
