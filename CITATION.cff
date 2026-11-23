@@ -21,13 +21,13 @@ keywords:
   - "twin primes"
   - "no-go"
 license: CC-BY-4.0
-date-released: "2026-11-23"
+date-released: "2026-11-08"
 repository-code: "https://github.com/BenFrohman/sieve-barrier-phase-modulated"
 url: "https://doi.org/10.5281/zenodo.24064752"
 identifiers:
   - type: doi
     value: "10.5281/zenodo.24064752"
-    description: "Version DOI of the 8 November 2026 deposit (concept 24064751); this repository holds the 23 November 2026 metadata update of that text."
+    description: "Version DOI of the 8 November 2026 preprint as deposited on 9 November 2026."
   - type: doi
     value: "10.5281/zenodo.24064751"
     description: "Concept DOI (all versions)."
